@@ -11,10 +11,10 @@
         <div class="container">
           <h1>Категории</h1>
           <% if (categories && categories.length > 0) { %>
-            <div class="prod-grid">
+            <div class="cat-grid">
               <% categories.forEach(cat => { %>
 
-                <article class="product-card">
+                <article class="category-card">
                   <a href="/categories/<%= cat.id %>">
                     <img src="<%= cat.image %>" alt="<%= cat.name %>">
                     <h3><%= cat.name %></h3>
