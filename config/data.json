@@ -10,7 +10,7 @@
       "name": "Смартфон XYZ Pro",
       "price": 29990,
       "category": "electronics",
-      "image": "https://via.placeholder.com/300x200?text=Phone",
+      "image": "/images/placeholder.jpg",
       "description": "Мощный смартфон с AMOLED-дисплеем и камерой 108 Мп",
       "specs": {
         "Экран": "6.7\" AMOLED",
@@ -24,7 +24,7 @@
       "name": "Ноутбук UltraBook 15",
       "price": 89990,
       "category": "electronics",
-      "image": "https://via.placeholder.com/300x200?text=Laptop",
+      "image": "/images/placeholder.jpg",
       "description": "Лёгкий и производительный ноутбук для работы и развлечений",
       "specs": {
         "Процессор": "Intel Core i7",
@@ -38,7 +38,7 @@
       "name": "Футболка Classic Cotton",
       "price": 1290,
       "category": "clothing",
-      "image": "https://via.placeholder.com/300x200?text=T-Shirt",
+      "image": "/images/placeholder.jpg",
       "description": "Удобная футболка из 100% хлопка, подходит для повседневной носки",
       "specs": {
         "Материал": "100% хлопок",
@@ -52,7 +52,7 @@
       "name": "Книга: Изучаем JavaScript",
       "price": 1890,
       "category": "books",
-      "image": "https://via.placeholder.com/300x200?text=Book",
+      "image": "/images/placeholder.jpg",
       "description": "Практическое руководство по современному JavaScript для начинающих",
       "specs": {
         "Автор": "А. Петров",

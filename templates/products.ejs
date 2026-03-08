@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Товары</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body>
+      <section class="products-page">
+        <div class="container">
+          <h1>Все товары</h1>
+          <% if (products && products.length > 0) { %>
+            <div class="prod-grid">
+              <% products.forEach(prod => { %>
+
+                <article class="product-card">
+                  <a href="/products/<%= prod.id %>">
+                    <img src="<%= prod.image %>" alt="<%= prod.name %>">
+                    <h3><%= prod.name %></h3>
+                    <p><%= prod.price %> Руб.</p>
+                    <p><%= prod.description %></p>
+                  </a>
+                </article>
+
+              <% }); %>
+            </div>
+          <% } else { %>
+            <p>Товары не найдены</p>
+          <% }; %>
+        </div>
+      </section>  
+    </body>
+</html>

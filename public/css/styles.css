@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0, 2rem;
+}
+
+.prod-grid {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 0;
+  overflow: hidden;
+  grid-template-columns: 33% 33% 33%;
+}
+
+.product-card {
+  border-radius: 5px;
+  background: rgb(203, 203, 203);
+  overflow: hidden;
+  box-shadow: 10px 5px 5px rgba(0,0,0,0.1);
+  transition: tranform 0.2s;
+}
+
+.product-card a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 1rem;
+}
+
+.product-card img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
