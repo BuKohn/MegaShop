@@ -1,10 +1,37 @@
 <header class="header">
     <div class="container">
-      <a href="/" class="logo">🛍️ MegaShop</a>
-      <nav class="nav">
-        <a href="/">Главная</a>
-        <a href="/products">Товары</a>
-        <a href="/categories">Категории</a>
-      </nav>
+        <a href="/" class="logo">🛍️ MegaShop</a>
+        <nav class="nav">
+            <a href="/">Главная</a>
+            <a href="/products">Товары</a>
+            <a href="/categories">Категории</a>
+            <% if (session && session.user) { %>
+                <a href="/cart" class="nav-link cart-link">
+                    Корзина
+                    <% if (typeof cartCount !== 'undefined' && cartCount > 0) { %>
+                        <span class="cart-badge" id="cart-badge"><%= cartCount %></span>
+                    <% } %>
+                </a>
+                <a href="/logout" id="logout-link" class="nav-link">Выйти</a>
+            <% } else { %>
+                <a href="/login" class="nav-link">Войти</a>
+            <% } %>
+        </nav>
     </div>
-  </header>
+</header>
+<% if (session && session.user) { %>
+    <script>
+        document.getElementById('logout-link')?.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch('/logout', { method: 'POST' });
+                const result = await res.json();
+                if (result.success) {
+                    window.location.href = '/';
+                }
+            } catch (e) {
+                console.error('Ошибка выхода:', e);
+            }
+        });
+    </script>
+<% } %>

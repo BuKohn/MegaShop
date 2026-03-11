@@ -6,8 +6,9 @@
         <link rel="stylesheet" href="/css/styles.css">
     </head>
     <body>
+    <div class="wrapper">
       <%- include('partials/header') %>
-      <section class="product-page">
+      <section class="product-page, content">
         <div class="container">
           <a href="/products" class="back-link">← Назад к товарам</a>
           
@@ -31,13 +32,20 @@
                 <% }) %>
               </div>
 
-              <div class="buy-btn-container">
-                <button class="buy-btn">Добавить в корзину</button>
-              </div>
+                <div class="buy-btn-container">
+                    <button id="add-to-cart-btn"
+                            class="buy-btn"
+                            data-product-id="<%= product.id %>">
+                        Добавить в корзину
+                    </button>
+                </div>
+                <a id="cart-message"></a>
             </div>
           </div>
         </div>
-      </section> 
-      <%- include('partials/footer') %> 
+      </section>
+      <%- include('partials/footer') %>
+    </div>>
     </body>
+<script src="/js/add_cart.js"></script>
 </html>

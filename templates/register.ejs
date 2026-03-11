@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Главная</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+<%- include('partials/header') %>
+<main>
+    <div class="vertical-container">
+        <h1 style="justify-self: center;">MEGASHOP</h1>
+        <input type="text" class="reg-log-textarea" placeholder="login">
+        <input type="email" class="reg-log-textarea" placeholder="email">
+        <input type="password" class="reg-log-textarea" placeholder="password">
+        <input type="password" class="reg-log-textarea" placeholder="repeat password">
+        <button class="reg-log-btn">Зарегистрироваться</button>
+        <a href="/login">я уже смешарик</a>
+    </div>
+</main>
+<%- include('partials/footer') %>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="/js/validation.js"></script>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Корзина</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="wrapper">
+    <%- include('partials/header') %>
+
+    <main class="content">
+        <div class="vertical-container">
+            <h1 style="text-align: center;">🛒 Ваша корзина</h1>
+
+            <!-- Сообщение если корзина пуста -->
+            <% if (cartItems && cartItems.length === 0) { %>
+                <div class="cart-empty">
+                    <p>Корзина пуста</p>
+                    <a href="/products" class="reg-log-btn" style="text-decoration: none; display: inline-block; text-align: center;">
+                        Перейти к товарам
+                    </a>
+                </div>
+            <% } else { %>
+
+                <!-- Список товаров -->
+                <div class="cart-list">
+                    <% cartItems.forEach(item => { %>
+                        <div class="cart-item" data-product-id="<%= item.id %>">
+                            <div class="cart-item-info">
+                                <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-img">
+                                <div class="cart-item-details">
+                                    <h3><%= item.name %></h3>
+                                    <p class="cart-item-price"><%= item.price %> Руб.</p>
+                                    <p class="cart-item-desc"><%= item.description %></p>
+                                </div>
+                            </div>
+                            <button class="remove-btn" data-product-id="<%= item.id %>">🗑️Удалить</button>
+                        </div>
+                    <% }) %>
+                </div>
+                <div class="cart-summary">
+                    <p class="cart-total">Итого: <strong><%= total %> Руб.</strong></p>
+                </div>
+
+            <% } %>
+            <div id="cart-message" style="margin-top: 1rem; min-height: 1.5rem;"></div>
+        </div>
+    </main>
+    <%- include('partials/footer') %>
+</div>
+<script src="/js/del_cart.js"></script>
+</body>
+</html>

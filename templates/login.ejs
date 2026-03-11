@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Главная</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body class="wrapper">
+<%- include('partials/header') %>
+<main class="content">
+    <div class="vertical-container">
+        <h1 style="justify-self: center;">MEGASHOP</h1>
+        <input id="login-email" type="email" class="reg-log-textarea" placeholder="email">
+        <input id="login-password" type="password" class="reg-log-textarea" placeholder="password">
+        <button id="login-btn" class="reg-log-btn">Войти</button>
+        <div id="login-message" style="color: red; margin-top: 10px;"></div>
+    </div>
+</main>
+</body>
+
+<footer>
+    <%- include('partials/footer') %>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="/js/client_login.js"></script>
+</html>

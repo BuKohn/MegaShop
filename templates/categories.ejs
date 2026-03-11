@@ -6,29 +6,31 @@
         <link rel="stylesheet" href="/css/styles.css">
     </head>
     <body>
-      <%- include('partials/header') %>
-      <section class="categories-page">
-        <div class="container">
-          <h1>Категории</h1>
-          <% if (categories && categories.length > 0) { %>
-            <div class="cat-grid">
-              <% categories.forEach(cat => { %>
+        <div class="wrapper">
+        <%- include('partials/header') %>
+        <section class="categories-page, content">
+            <div class="container">
+                <h1>Категории</h1>
+                <% if (categories && categories.length > 0) { %>
+                <div class="cat-grid">
+                    <% categories.forEach(cat => { %>
 
-                <article class="category-card">
-                  <a href="/categories/<%= cat.id %>">
-                    <img src="<%= cat.image %>" alt="<%= cat.name %>">
-                    <h3><%= cat.name %></h3>
-                    <p><%= cat.description %></p>
-                  </a>
-                </article>
+                    <article class="category-card">
+                    <a href="/categories/<%= cat.id %>">
+                        <img src="<%= cat.image %>" alt="<%= cat.name %>">
+                        <h3><%= cat.name %></h3>
+                        <p><%= cat.description %></p>
+                    </a>
+                    </article>
 
-              <% }); %>
+                <% }); %>
+                </div>
+                <% } else { %>
+                <p>Категории не найдены</p>
+            <% }; %>
             </div>
-          <% } else { %>
-            <p>Категории не найдены</p>
-          <% }; %>
+        </section>
+        <%- include('partials/footer') %>
         </div>
-      </section>
-      <%- include('partials/footer') %>
     </body>
 </html>

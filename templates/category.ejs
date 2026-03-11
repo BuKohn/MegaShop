@@ -5,9 +5,9 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="/css/styles.css">
     </head>
-    <body>
+    <body class="wrapper">
       <%- include('partials/header') %>
-      <section class="products-page">
+      <section class="products-page, content">
         <div class="container">
           <h1><%= category.name %></h1>
           <% if (products && products.length > 0) { %>
@@ -30,6 +30,8 @@
           <% }; %>
         </div>
       </section>
-      <%- include('partials/footer') %>
     </body>
+    <footer>
+        <%- include('partials/footer') %>
+    </footer>
 </html>

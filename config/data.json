@@ -1,8 +1,23 @@
 {
   "categories": [
-    { "id": "electronics", "name": "Электроника", "image": "/images/placeholder.jpg", "description": "Смартфоны, ноутбуки, аксессуары" },
-    { "id": "clothing", "name": "Одежда", "image": "/images/placeholder.jpg", "description": "Футболки, джинсы, куртки" },
-    { "id": "books", "name": "Книги","image": "/images/placeholder.jpg", "description": "Художественная и техническая литература" }
+    {
+      "id": "electronics",
+      "name": "Электроника",
+      "image": "/images/placeholder.jpg",
+      "description": "Смартфоны, ноутбуки, аксессуары"
+    },
+    {
+      "id": "clothing",
+      "name": "Одежда",
+      "image": "/images/placeholder.jpg",
+      "description": "Футболки, джинсы, куртки"
+    },
+    {
+      "id": "books",
+      "name": "Книги",
+      "image": "/images/placeholder.jpg",
+      "description": "Художественная и техническая литература"
+    }
   ],
   "products": [
     {
@@ -60,6 +75,29 @@
         "Год": "2024",
         "Язык": "Русский"
       }
+    }
+  ],
+  "users": [
+    {
+      "login": "testuser",
+      "email": "test@gmail.com",
+      "password": "123",
+      "cart": []
+    },
+    {
+      "login": "testuse",
+      "email": "test@mail.ru",
+      "password": "$2b$10$fa.5.ywDFt9wbaQQ.98Rfe5gs5oyb5MQpCLvaQ6z3pCp0wqQlqNlG",
+      "cart": []
+    },
+    {
+      "login": "k1r1ll1sa",
+      "email": "k1r1ll1sa@yandex.ru",
+      "password": "$2b$10$K9jixcqzcuFnHb13A7LOxeLR44OsnicIeqVeacbs8SdMv7iJ7o5Zy",
+      "cart": [
+        1
+      ],
+      "cart_length": 1
     }
   ]
 }
