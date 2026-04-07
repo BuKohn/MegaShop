@@ -43,7 +43,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// счётчик товаров в коризне
+// счётчик товаров в корзине
 app.use(async (req, res, next) => {
   try {
     const data = await fs.readFile(path.join(__dirname, "config", "data.json"), "utf-8");
@@ -67,6 +67,7 @@ app.use(async (req, res, next) => {
 });
 
 //Роуты
+app.use("/api", require("./routes/api"));
 app.use("/categories", require("./routes/categories"));
 app.use("/products", require("./routes/products"));
 app.use("/register", require("./routes/register"));

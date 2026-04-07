@@ -92,6 +92,19 @@
       "login": "k1r1ll1sa",
       "email": "k1r1ll1sa@yandex.ru",
       "password": "$2b$10$K9jixcqzcuFnHb13A7LOxeLR44OsnicIeqVeacbs8SdMv7iJ7o5Zy"
+    },
+    {
+      "login": "holkay",
+      "email": "ronneron682@gmail.com",
+      "password": "$2b$10$iGBjDDi1jAVATQDTs8eYJeADURD7FDYv5pTYzETssBpSlBh.bolhq",
+      "cart": []
+    },
+    {
+      "login": "Иван Петров",
+      "name": "Иван Петров",
+      "email": "ivan@example.com",
+      "password": "$2b$10$zRAuS3GyPpSZIL1SkU3zAelfEs4o9sRzA9O8vP/kPtZRScuOvYXOC",
+      "cart": []
     }
   ]
 }
