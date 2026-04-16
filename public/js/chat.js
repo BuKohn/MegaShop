@@ -88,6 +88,9 @@ function joinRoom(roomName) {
 
 // Отправка сообщения
 function sendMessage() {
+    if (window.currentUser?.id === null){
+        alert('Только авторизованные пользователи могут отправлять сообщения!')
+    };
     const input = document.getElementById('chatInput');
     const text = input?.value.trim();
     if (text && socket && currentRoom) {

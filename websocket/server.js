@@ -107,6 +107,11 @@ function initWebSocket(server) {
 
         // 3. send_message
         socket.on('send_message', ({ text, room }) => {
+            if (username === 'Гость') {
+                socket.emit('error', { message: 'Только авторизованные пользователи могут отправлять сообщения' });
+                return;
+            }
+
             if (!ROOMS[room]) {
                 logError(socket.id, username, `Отправка в несуществующую комнату: ${room}`);
                 socket.emit('error', { message: 'Комната не существует' });
