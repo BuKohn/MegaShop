@@ -111,7 +111,6 @@ function initWebSocket(server) {
                 socket.emit('error', { message: 'Только авторизованные пользователи могут отправлять сообщения' });
                 return;
             }
-
             if (!ROOMS[room]) {
                 logError(socket.id, username, `Отправка в несуществующую комнату: ${room}`);
                 socket.emit('error', { message: 'Комната не существует' });
@@ -170,6 +169,31 @@ function initWebSocket(server) {
             }
             socket.emit('online_users', { room, users, count: users.length });
             console.log(`[${new Date().toISOString()}] INFO [socketId:${socket.id}] ${username} запросил список пользователей в "${ROOMS[room]}". Найдено: ${users.length}`);
+        });
+
+        // 6. get_unread_counts — счётчик непрочитанных без подписки на комнату
+        socket.on('get_unread_counts', ({ since }) => {
+            if (!since || typeof since !== 'object') {
+                socket.emit('error', { message: 'since должен быть объектом' });
+                return;
+            }
+            const counts = {};
+            for (const room of Object.keys(ROOMS)) {
+                const sinceTs = since[room];
+                const history = messageHistory[room] || [];
+                if (!sinceTs) {
+                    counts[room] = 0;
+                } else {
+                    const cutoff = new Date(sinceTs).getTime();
+                    let n = 0;
+                    for (const msg of history) {
+                        const t = new Date(msg.timestamp).getTime();
+                        if (t > cutoff && msg.username !== username) n++;
+                    }
+                    counts[room] = n;
+                }
+            }
+            socket.emit('unread_counts', { counts });
         });
 
         socket.on('disconnect', () => {

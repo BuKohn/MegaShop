@@ -1,0 +1,70 @@
+<%- include('partials/header') %>
+
+<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="/css/chat-page.css">
+<script src="/socket.io/socket.io.js"></script>
+
+<div class="chat-page">
+
+    <!-- Левая колонка: список комнат -->
+    <aside class="chat-sidebar">
+        <div class="chat-sidebar-header">Комнаты</div>
+        <nav class="chat-rooms-nav">
+            <button class="room-btn active" data-room="general">
+                <span class="room-btn-name">Общий чат</span>
+                <span class="unread-badge">0</span>
+            </button>
+            <button class="room-btn" data-room="support">
+                <span class="room-btn-name">Техподдержка</span>
+                <span class="unread-badge">0</span>
+            </button>
+            <button class="room-btn" data-room="products-discussion">
+                <span class="room-btn-name">Обсуждение товаров</span>
+                <span class="unread-badge">0</span>
+            </button>
+            <button class="room-btn" data-room="random">
+                <span class="room-btn-name">Случайная комната</span>
+                <span class="unread-badge">0</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Центральная колонка: сообщения -->
+    <main class="chat-main">
+        <div class="chat-main-header">
+            <h2 id="current-room-name">Общий чат</h2>
+            <div id="connection-status" class="connection-status"></div>
+        </div>
+
+        <div id="chat-messages" class="chat-messages-area"></div>
+
+        <div id="typing-indicator" class="chat-typing-indicator"></div>
+        <div id="own-typing-status" class="own-typing-status"></div>
+
+        <div class="chat-input-row">
+            <input
+                type="text"
+                id="message-input"
+                class="chat-page-input"
+                placeholder="Введите сообщение..."
+                maxlength="500"
+                autocomplete="off"
+            />
+            <button id="send-button" class="chat-page-send-btn">Отправить</button>
+        </div>
+    </main>
+
+    <!-- Правая колонка: участники -->
+    <aside class="chat-users-panel">
+        <div class="chat-users-panel-header">
+            Участники
+            <span id="users-panel-count" class="users-panel-count">0</span>
+        </div>
+        <ul id="users-list" class="chat-users-list"></ul>
+    </aside>
+
+</div>
+
+<script src="/js/chat/websocket.js"></script>
+
+<%- include('partials/footer') %>
