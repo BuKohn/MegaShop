@@ -62,6 +62,7 @@ app.use("/register", require("./routes/views/register"));
 app.use("/login", require("./routes/views/login"));
 app.use("/cart", require("./routes/views/cart"));
 app.use("/api", require("./routes/api/api"));
+app.use("/chat", require("./routes/views/chat"));
 app.use("/", require("./routes/views/index"));
 
 app.use((req, res) => {

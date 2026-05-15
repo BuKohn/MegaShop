@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MegaShop</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/chat.css">
-    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <header class="header">
@@ -16,6 +14,7 @@
             <a href="/">Главная</a>
             <a href="/products">Товары</a>
             <a href="/categories">Категории</a>
+            <a href="/chat">Чат</a>
             <% if (session && session.user) { %>
                 <a href="/cart" class="nav-link cart-link">
                     Корзина

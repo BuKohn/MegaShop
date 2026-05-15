@@ -1,41 +1,8 @@
-<!-- Кнопка чата (доступна всем) -->
-<button id="chatToggle" class="chat-toggle" title="Открыть чат">
-    💬
-</button>
-
-<!-- Окно чата -->
-<div id="chatWindow" class="chat-window hidden">
-    <div class="chat-header">
-        <div class="chat-title">
-            <h3>Чат</h3>
-            <span id="currentRoomName">Общий чат</span>
-        </div>
-        <button id="chatClose" class="chat-close">&times;</button>
-    </div>
-
-    <div class="chat-tabs">
-        <button class="chat-tab active" data-room="general">Общий</button>
-        <button class="chat-tab" data-room="support">Поддержка</button>
-        <button class="chat-tab" data-room="products-discussion">Товары</button>
-        <button class="chat-tab" data-room="random">Random</button>
-    </div>
-
-    <div id="chatMessages" class="chat-messages"></div>
-
-    <div id="typingIndicator" class="typing-indicator hidden"></div>
-
-    <div class="chat-input-area">
-        <input type="text" id="chatInput" class="chat-input" placeholder="Введите сообщение..." maxlength="500">
-        <button id="chatSend" class="chat-send">=></button>
-    </div>
-</div>
-
 <footer class="footer">
     <div class="container">
         <p>&copy; 2026 Интернет-магазин. Все права защищены.</p>
     </div>
 </footer>
 
-<script src="/js/chat.js"></script>
 </body>
 </html>
