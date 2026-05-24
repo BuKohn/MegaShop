@@ -2,6 +2,15 @@ const { Server } = require("socket.io");
 const fs = require("fs").promises;
 const path = require("path");
 
+async function readData() {
+    const raw = await fs.readFile(DATA_FILE, "utf-8");
+    return JSON.parse(raw);
+}
+
+async function writeData(data) {
+    await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
+}
+
 function initWebSocket(server) {
     const io = new Server(server, {
         cors: { origin: "http://localhost:3000", methods: ["GET", "POST"] }
@@ -15,6 +24,7 @@ function initWebSocket(server) {
     };
     const MAX_HISTORY = 50;
     const DATA_FILE = path.join(__dirname, "../config/data.json");
+    const notificationSubscriptions = new Map();
 
     let messageHistory = {};
     Object.keys(ROOMS).forEach(room => messageHistory[room] = []);
@@ -62,6 +72,49 @@ function initWebSocket(server) {
         return users;
     }
 
+    // Обновляет настройки уведомлений пользователя в data.json
+    async function updateUserNotificationSettings(userId, room, enabled) {
+        try {
+            const data = await readData();
+            const users = data.users || [];
+            
+            const userIndex = userId - 1;
+            
+            if (userIndex < 0 || userIndex >= users.length) {
+                console.error(`[WS] Пользователь с id=${userId} не найден`);
+                return false;
+            }
+            
+            const user = users[userIndex];
+            
+            if (!user.notificationSettings) {
+                user.notificationSettings = { rooms: [] };
+            }
+            if (!Array.isArray(user.notificationSettings.rooms)) {
+                user.notificationSettings.rooms = [];
+            }
+            
+            const rooms = user.notificationSettings.rooms;
+            const roomIndex = rooms.indexOf(room);
+            
+            if (enabled && roomIndex === -1) {
+                rooms.push(room);
+            } else if (!enabled && roomIndex !== -1) {
+                rooms.splice(roomIndex, 1);
+            } else {
+                return true;
+            }
+            
+            await writeData(data);
+            console.log(`[WS] Настройки обновлены: user=${user.login}, room=${room}, enabled=${enabled}`);
+            return true;
+            
+        } catch (err) {
+            console.error(`[WS] Ошибка обновления настроек:`, err.message);
+            return false;
+        }
+    }
+
     function logError(socketId, username, message) {
         console.log(`[${new Date().toISOString()}] ERROR [socketId:${socketId}] ${username}: ${message}`);
     }
@@ -73,6 +126,8 @@ function initWebSocket(server) {
         const userId = userInfo.id || null;
         const clientIp = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress || 'unknown';
         const connectTime = new Date().toISOString();
+        const userSettings = socket.request.session?.user?.notificationSettings || { rooms: [] };
+        notificationSubscriptions.set(socket.id, new Set(userSettings.rooms || []));
 
         console.log(`[${connectTime}] INFO [socketId:${socket.id}] Подключение: IP=${clientIp}, user=${username}, userId=${userId || 'null'}`);
 
@@ -92,6 +147,11 @@ function initWebSocket(server) {
 
             socket.emit('message_history', { room, messages: messageHistory[room] || [] });
             socket.to(room).emit('user_joined', { username, userId, room, timestamp: new Date().toISOString() });
+        });
+
+        socket.on('get_notification_settings', () => {
+            const settings = socket.request.session?.user?.notificationSettings || { rooms: [] };
+            socket.emit('notification_settings', settings);
         });
 
         // 2. leave_room
@@ -135,11 +195,31 @@ function initWebSocket(server) {
                 room,
                 timestamp: new Date().toISOString()
             };
+            io.to(room).emit('message', message);
+
+            const notification = {
+                type: 'new_message',
+                room,
+                roomName: ROOMS[room],
+                message: text,
+                from: username,
+                timestamp: new Date().toISOString()
+            }
+
+            for (const [targetSocketId, subscribedRooms] of notificationSubscriptions) {
+                if (targetSocketId === socket.id) continue;
+                
+                const targetSocket = io.sockets.sockets.get(targetSocketId);
+                if (!targetSocket) continue;
+                
+                if (subscribedRooms.has(room) && !targetSocket.rooms.has(room)) {
+                    io.to(targetSocketId).emit('notification', notification);
+                }
+            }
 
             messageHistory[room].push(message);
             if (messageHistory[room].length > MAX_HISTORY) messageHistory[room].shift();
 
-            io.to(room).emit('message', message);
             console.log(`[${new Date().toISOString()}] INFO [socketId:${socket.id}] ${username} -> ${ROOMS[room]}: "${text.trim()}"`);
         });
 
@@ -196,10 +276,56 @@ function initWebSocket(server) {
             socket.emit('unread_counts', { counts });
         });
 
+        // Подписка на уведомления комнаты
+        socket.on('subscribe_notifications', async ({ room }) => {
+            if (!ROOMS[room]) return;
+        
+            const userId = socket.request.session?.user?.id;
+            if (!userId) return;
+        
+            const subs = notificationSubscriptions.get(socket.id) || new Set();
+            subs.add(room);
+            notificationSubscriptions.set(socket.id, subs);
+        
+            if (socket.request.session?.user?.notificationSettings) {
+                if (!socket.request.session.user.notificationSettings.rooms.includes(room)) {
+                    socket.request.session.user.notificationSettings.rooms.push(room);
+                    socket.request.session.save();
+                }
+            }
+        
+            await updateUserNotificationSettings(userId, room, true);
+        
+            console.log(`[WS] ${socket.id} включил уведомления для ${room}`);
+            socket.emit('notification_settings_updated', { room, enabled: true });
+        });
+
+        // Отписка
+        socket.on('unsubscribe_notifications', async ({ room }) => {
+            const userId = socket.request.session?.user?.id;
+            if (!userId) return;
+        
+            const subs = notificationSubscriptions.get(socket.id) || new Set();
+            subs.delete(room);
+            notificationSubscriptions.set(socket.id, subs);
+        
+            if (socket.request.session?.user?.notificationSettings) {
+                socket.request.session.user.notificationSettings.rooms = 
+                    socket.request.session.user.notificationSettings.rooms.filter(r => r !== room);
+                socket.request.session.save();
+            }
+        
+            await updateUserNotificationSettings(userId, room, false);
+            
+            console.log(`[WS] ${socket.id} отключил уведомления для ${room}`);
+            socket.emit('notification_settings_updated', { room, enabled: false });
+        });
+
         socket.on('disconnect', () => {
             if (socket.currentRoom) {
                 socket.to(socket.currentRoom).emit('user_left', { username, userId, room: socket.currentRoom, timestamp: new Date().toISOString() });
             }
+            notificationSubscriptions.delete(socket.id);
             console.log(`[${new Date().toISOString()}] INFO [socketId:${socket.id}] Отключение: user=${username}`);
         });
     });

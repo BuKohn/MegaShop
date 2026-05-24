@@ -27,6 +27,11 @@ class ChatClient {
         this.typingTimeout = null;
         this.unreadPollTimer = null;
 
+        this.notificationSettings = {};
+        this.rooms.forEach(room => {
+            this.notificationSettings[room] = false;
+        });
+
         this.initSocket();
         this.bindEvents();
     }
@@ -44,10 +49,15 @@ class ChatClient {
             console.log('[Chat] Подключено');
             this.isConnected = true;
             this.updateConnectionStatus('connected');
+            this.socket.emit('get_notification_settings');
             this.socket.emit('join_room', { room: this.currentRoom });
             this.updateActiveRoom(this.currentRoom);
             this.renderMessages();
             this._startUnreadPolling();
+        });
+
+        this.socket.on('notification_settings', (settings) => {
+            this.initNotificationSettings(settings);
         });
 
         this.socket.on('disconnect', () => {
@@ -112,6 +122,19 @@ class ChatClient {
 
         this.socket.on('error', (data) => {
             console.error('[Chat] Ошибка сервера:', data.message);
+        });
+
+        this.socket.on('notification', (data) => {
+            this.showPushNotification(data);
+        });
+
+        this.socket.on('notification_settings_updated', (data) => {
+            const { room, enabled } = data;
+            this.notificationSettings[room] = enabled;
+            
+            if (room === this.currentRoom) {
+                this.updateNotificationButton(room);
+            }
         });
     }
 
@@ -178,6 +201,12 @@ class ChatClient {
         const typingEl = document.getElementById('typing-indicator');
         if (typingEl) typingEl.textContent = '';
         this.updateOwnTypingStatus(false);
+
+        const notificationBtn = document.querySelector('.notification-toggle');
+        if (notificationBtn) {
+            notificationBtn.dataset.room = roomName;
+        }
+        this.updateNotificationButton(roomName);
     }
 
     // Отправка сообщения в текущую комнату + сброс индикатора печати
@@ -236,18 +265,26 @@ class ChatClient {
         if (el) el.textContent = isTyping ? 'Вы печатаете...' : '';
     }
 
-    // Привязывает обработчики кликов на кнопки комнат, отправки и поле ввода
     bindEvents() {
         document.querySelectorAll('.room-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
+                if (e.target.closest('.room-notification-toggle')) return;
                 const room = e.currentTarget.dataset.room;
                 if (room) this.joinRoom(room);
             });
         });
-
+    
+        const notificationBtn = document.querySelector('.notification-toggle');
+        if (notificationBtn) {
+            notificationBtn.addEventListener('click', () => {
+                const room = notificationBtn.dataset.room;
+                if (room) this.toggleNotification(room);
+            });
+        }
+        
         const sendBtn = document.getElementById('send-button');
         const input = document.getElementById('message-input');
-
+        
         if (sendBtn && input) {
             sendBtn.addEventListener('click', () => this.sendMessage(input.value));
         }
@@ -256,6 +293,16 @@ class ChatClient {
                 if (e.key === 'Enter') this.sendMessage(input.value);
             });
             input.addEventListener('input', () => this.startTyping());
+        }
+
+        if ('Notification' in window && Notification.permission === 'default') {
+            document.body.addEventListener('click', () => {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        console.log('[Chat] Разрешение на уведомления получено');
+                    }
+                });
+            }, { once: true });
         }
     }
 
@@ -376,6 +423,28 @@ class ChatClient {
         container.scrollTop = container.scrollHeight;
     }
 
+    // Показывает Push-уведомление
+    showPushNotification({ roomName, from, message, room }) {
+        if (Notification.permission !== 'granted') {
+            console.warn('Нет разрешения на показ уведомлений');
+            return;
+        }
+
+        const notification = new Notification(`💬 ${roomName}`, {
+            body: `${from}: ${message}`,
+            tag: `chat-${room}-${Date.now()}`,
+            requireInteraction: false
+        });
+
+        notification.onclick = () => {
+            window.focus();
+            this.joinRoom(room);
+            notification.close();
+        };
+
+        setTimeout(() => notification.close(), 5000);
+    }
+
     clearInput() {
         const input = document.getElementById('message-input');
         if (input) input.value = '';
@@ -386,6 +455,45 @@ class ChatClient {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    updateNotificationButton(room) {
+        const btn = document.querySelector(`.notification-toggle[data-room="${room}"]`);
+        if (!btn) return;
+        
+        const isEnabled = this.notificationSettings[room];
+        
+        if (isEnabled) {
+            btn.textContent = 'Отключить уведомления';
+            btn.classList.add('active');
+            btn.title = 'Уведомления включены для этой комнаты';
+        } else {
+            btn.textContent = 'Включить уведомления';
+            btn.classList.remove('active');
+            btn.title = 'Уведомления отключены для этой комнаты';
+        }
+    }
+
+    toggleNotification(room) {
+        const isEnabled = this.notificationSettings[room];
+        
+        if (isEnabled) {
+            this.socket.emit('unsubscribe_notifications', { room });
+        } else {
+            this.socket.emit('subscribe_notifications', { room });
+        }
+    }
+
+    initNotificationSettings(settings) {
+        if (!settings?.rooms) return;
+        
+        settings.rooms.forEach(room => {
+            if (this.rooms.includes(room)) {
+                this.notificationSettings[room] = true;
+            }
+        });
+        
+        this.updateNotificationButton(this.currentRoom);
     }
 }
 

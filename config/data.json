@@ -166,6 +166,30 @@
       "email": "testuser66@gmail.com",
       "password": "$2b$10$IWpYafkGXo/oxhnpN4JcXu9VUTFwef5JPMJusF0mJxagIjZ.htMye",
       "cart": []
+    },
+    {
+      "login": "testuser77",
+      "name": "testuser77",
+      "email": "testuser77@gmail.com",
+      "password": "$2b$10$uNsMhUTdW7WcM.q3.uBO1O/7pE9NJueQmsfaNdINQ6DOsNi4lzL6.",
+      "cart": [],
+      "notificationSettings": {
+        "enabled": false,
+        "rooms": []
+      }
+    },
+    {
+      "login": "testuser88",
+      "name": "testuser88",
+      "email": "testuser88@gmail.com",
+      "password": "$2b$10$GV3Y1QD1sP2wvH7TvkTHOelAwDrS3NFZpLpdALnwSXlmlo0z/uSda",
+      "cart": [],
+      "notificationSettings": {
+        "enabled": false,
+        "rooms": [
+          "general"
+        ]
+      }
     }
   ],
   "chatHistory": {
@@ -265,6 +289,70 @@
         "userId": 13,
         "room": "general",
         "timestamp": "2026-05-14T18:00:55.786Z"
+      },
+      {
+        "id": 1779624604935,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "general",
+        "timestamp": "2026-05-24T12:10:04.935Z"
+      },
+      {
+        "id": 1779624629750,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "general",
+        "timestamp": "2026-05-24T12:10:29.750Z"
+      },
+      {
+        "id": 1779624668391,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "general",
+        "timestamp": "2026-05-24T12:11:08.391Z"
+      },
+      {
+        "id": 1779624723019,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "general",
+        "timestamp": "2026-05-24T12:12:03.019Z"
+      },
+      {
+        "id": 1779624813707,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "general",
+        "timestamp": "2026-05-24T12:13:33.707Z"
+      },
+      {
+        "id": 1779625661760,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "general",
+        "timestamp": "2026-05-24T12:27:41.760Z"
+      },
+      {
+        "id": 1779625920094,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "general",
+        "timestamp": "2026-05-24T12:32:00.094Z"
+      },
+      {
+        "id": 1779626457350,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "general",
+        "timestamp": "2026-05-24T12:40:57.350Z"
       }
     ],
     "support": [
@@ -339,6 +427,62 @@
         "userId": 13,
         "room": "support",
         "timestamp": "2026-05-15T14:38:17.779Z"
+      },
+      {
+        "id": 1779507694715,
+        "text": "прив",
+        "username": "testuser5",
+        "userId": 10,
+        "room": "support",
+        "timestamp": "2026-05-23T03:41:34.715Z"
+      },
+      {
+        "id": 1779624817578,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "support",
+        "timestamp": "2026-05-24T12:13:37.578Z"
+      },
+      {
+        "id": 1779625933535,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "support",
+        "timestamp": "2026-05-24T12:32:13.535Z"
+      },
+      {
+        "id": 1779625940085,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "support",
+        "timestamp": "2026-05-24T12:32:20.085Z"
+      },
+      {
+        "id": 1779625948271,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "support",
+        "timestamp": "2026-05-24T12:32:28.271Z"
+      },
+      {
+        "id": 1779625962278,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "support",
+        "timestamp": "2026-05-24T12:32:42.278Z"
+      },
+      {
+        "id": 1779626450550,
+        "text": "Привет",
+        "username": "testuser77",
+        "userId": 15,
+        "room": "support",
+        "timestamp": "2026-05-24T12:40:50.550Z"
       }
     ],
     "products-discussion": [

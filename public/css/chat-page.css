@@ -351,6 +351,31 @@ body {
     flex-shrink: 0;
 }
 
+.notification-toggle {
+    padding: 8px 16px;
+    border: 1px solid #bdc3c7;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    margin-left: 12px;
+}
+
+.notification-toggle:hover {
+    background: #ecf0f1;
+}
+
+.notification-toggle.active {
+    background: #2ecc71;
+    color: white;
+    border-color: #27ae60;
+}
+
+.notification-toggle.active:hover {
+    background: #27ae60;
+}
+
 /* ── Адаптив: на узких экранах сужаем колонки, а не прячем их ───── */
 
 @media (max-width: 900px) {

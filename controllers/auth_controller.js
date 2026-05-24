@@ -71,7 +71,17 @@ async function registerUser(req, res) {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = { login: name, name, email, password: passwordHash, cart: [] };
+    const user = { login: name,
+      name,
+      email,
+      password: passwordHash,
+      cart: [],
+      notificationSettings: {
+        enabled: false,
+        rooms: []
+      } 
+    };
+
     users.push(user);
     data.users = users;
     await writeData(data);
@@ -108,7 +118,8 @@ async function loginUser(req, res) {
     req.session.user = {
       login: user.name || user.login || "",
       email: normalizeEmail(user.email || ""),
-      id: userIndex + 1
+      id: userIndex + 1,
+      notificationSettings: user.notificationSettings || { enabled: false, rooms: [] }
     };
 
     console.log('Session created:', req.session.user);
