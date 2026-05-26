@@ -96,7 +96,7 @@
         alert(data.message || 'Подписка оформлена!');
 
         messaging.onMessage((payload) => {
-            console.log('📨 Получено сообщение на переднем плане:', payload);
+            console.log('Получено сообщение на переднем плане:', payload);
 
             if (Notification.permission === 'granted') {
                 new Notification(payload.notification.title, {

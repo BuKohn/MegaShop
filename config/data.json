@@ -23,7 +23,7 @@
     {
       "id": 1,
       "name": "Смартфон XYZ Pro",
-      "price": 25910,
+      "price": 25940,
       "category": "electronics",
       "image": "/images/placeholder.jpg",
       "description": "Мощный смартфон с AMOLED-дисплеем и камерой 108 Мп",
@@ -33,7 +33,7 @@
         "Камера": "108 Мп",
         "Батарея": "5000 мАч"
       },
-      "oldPrice": 25900
+      "oldPrice": 25910
     },
     {
       "id": 2,
@@ -53,7 +53,7 @@
     {
       "id": 3,
       "name": "Футболка Classic Cotton",
-      "price": 25930,
+      "price": 25949,
       "category": "clothing",
       "image": "/images/placeholder.jpg",
       "description": "Удобная футболка из 100% хлопка, подходит для повседневной носки",
@@ -63,7 +63,7 @@
         "Цвета": "Чёрный, Белый, Синий",
         "Уход": "Машинная стирка 30°C"
       },
-      "oldPrice": 25920
+      "oldPrice": 25939
     },
     {
       "id": 4,
@@ -147,14 +147,26 @@
       "name": "username",
       "email": "username@mail.ru",
       "password": "$2b$10$aHYKeaPypP03IWG95XifBug86FJEIzAhqBDY3kygef6op2LPSq2Pi",
-      "cart": []
+      "cart": [],
+      "fcmTokens": [
+        "dWoTuJ8jgy69c7IlwwoNm7:APA91bEwCXsGvaMPk1K5Vs3MRvRBerzQwiKYO3Ko3CK3hjiSe4QxuZc4EuAME6FVVKOpIKKYhku7cAfdByJtc4qw9K3keIgq8nrM_lD0_Rr7vAhra_GC8kM"
+      ],
+      "trackedProducts": [
+        1
+      ]
     },
     {
       "login": "testerovshik",
       "name": "testerovshik",
       "email": "testerovshik@mail.ru",
       "password": "$2b$10$6A2hO6konDl7ZrwHhiRlK.yHY7xN27YcsJuGYNBlvx4re7Mpo6odG",
-      "cart": []
+      "cart": [],
+      "fcmTokens": [
+        "dWoTuJ8jgy69c7IlwwoNm7:APA91bEwCXsGvaMPk1K5Vs3MRvRBerzQwiKYO3Ko3CK3hjiSe4QxuZc4EuAME6FVVKOpIKKYhku7cAfdByJtc4qw9K3keIgq8nrM_lD0_Rr7vAhra_GC8kM"
+      ],
+      "trackedProducts": [
+        1
+      ]
     },
     {
       "login": "testuser55",

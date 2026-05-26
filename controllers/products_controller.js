@@ -80,31 +80,6 @@ async function subscribeToProduct(req, res) {
   try {
     const productId = parseInt(req.params.id);
     const { fcmToken } = req.body;
-    const userId = req.session?.user?.id || req.session?.user?._id;
-
-    if (!userId || !fcmToken) return res.status(400).json({ error: 'Нет токена или пользователя' });
-
-    const data = await readData();
-    const user = data.users.find(u => u.id === userId || u._id === userId);
-    if (!user) return res.status(404).json({ error: 'Пользователь не найден' });
-
-    user.fcmTokens = user.fcmTokens || [];
-    user.trackedProducts = user.trackedProducts || [];
-
-    if (!user.fcmTokens.includes(fcmToken)) user.fcmTokens.push(fcmToken);
-    if (!user.trackedProducts.includes(productId)) user.trackedProducts.push(productId);
-
-    await writeData(data);
-    res.json({ success: true, message: 'Подписка оформлена' });
-  } catch (err) {
-    res.status(500).json({ error: 'Ошибка подписки' });
-  }
-}
-
-async function subscribeToProduct(req, res) {
-  try {
-    const productId = parseInt(req.params.id);
-    const { fcmToken } = req.body;
 
     const userLogin = req.session?.user?.login;
     console.log(`Пользователь: ${userLogin}, товар: ${productId}, токен: ${fcmToken?.substring(0, 30)}...`);
