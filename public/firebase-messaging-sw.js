@@ -1,4 +1,3 @@
-// public/firebase-messaging-sw.js
 importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js');
 
@@ -16,7 +15,7 @@ const messaging = firebase.messaging();
 console.log('[SW] Firebase Messaging initialized');
 
 messaging.onBackgroundMessage(function(payload) {
-    console.log('[SW] 📨 Получено фоновое сообщение:', payload);
+    console.log('[SW] Получено фоновое сообщение:', payload);
 
     const notificationTitle = payload.notification?.title || 'Уведомление';
     const notificationOptions = {
@@ -34,7 +33,7 @@ messaging.onBackgroundMessage(function(payload) {
 
 // Обработка клика по уведомлению
 self.addEventListener('notificationclick', function(event) {
-    console.log('[SW] 🔔 Клик по уведомлению:', event.notification.title);
+    console.log('[SW] Клик по уведомлению:', event.notification.title);
     event.notification.close();
     event.waitUntil(clients.openWindow('/products/1'));
 });
