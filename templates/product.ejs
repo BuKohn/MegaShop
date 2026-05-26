@@ -38,6 +38,12 @@
                             data-product-id="<%= product.id %>">
                         Добавить в корзину
                     </button>
+                    <button id="track-btn"
+                            class="buy-btn"
+                            style="background:#4caf50; margin-top:10px;"
+                            data-product-id="<%= product.id %>">
+                        Отслеживать
+                    </button>
                 </div>
                 <a id="cart-message"></a>
             </div>
@@ -48,4 +54,57 @@
     </div>>
     </body>
 <script src="/js/add_cart.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyAXPSwGdaVEJHinl4IYWYhtP2V9R8fan9o",
+        authDomain: "megashop-97808.firebaseapp.com",
+        projectId: "megashop-97808",
+        messagingSenderId: "883545548919",
+        appId: "1:883545548919:web:07244e6fe7157c251a3e72"
+    };
+
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+    document.getElementById('track-btn').addEventListener('click', async () => {
+        if (!('serviceWorker' in navigator)) return alert('Service Worker не поддерживается');
+        if (!('Notification' in window)) return alert('Браузер не поддерживает уведомления');
+        // Регистрация SW
+        const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+
+        // Запрос разрешения
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') return alert('Разрешите уведомления в браузере!');
+
+        // Получение токена
+        const token = await messaging.getToken({
+            vapidKey: 'BFRo5D7ZKkJDg36-1lWT9bet49rRa-VqN3c-Hc_MT54xh6mIpu3brkiFTBVTp7uuiNfWJr2ZG6WqB8xZx464EPQ',
+            serviceWorkerRegistration: reg
+        });
+
+        const productId = document.getElementById('track-btn').dataset.productId;
+
+        // Отправка на сервер
+        const res = await fetch(`/products/${productId}/subscribe`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fcmToken: token })
+        });
+
+        const data = await res.json();
+        alert(data.message || 'Подписка оформлена!');
+
+        messaging.onMessage((payload) => {
+            console.log('📨 Получено сообщение на переднем плане:', payload);
+
+            if (Notification.permission === 'granted') {
+                new Notification(payload.notification.title, {
+                    body: payload.notification.body,
+                    icon: '/images/placeholder.jpg'
+                });
+            }
+        });
+    });
+</script>
 </html>

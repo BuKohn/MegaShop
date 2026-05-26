@@ -23,7 +23,7 @@
     {
       "id": 1,
       "name": "Смартфон XYZ Pro",
-      "price": 29990,
+      "price": 25910,
       "category": "electronics",
       "image": "/images/placeholder.jpg",
       "description": "Мощный смартфон с AMOLED-дисплеем и камерой 108 Мп",
@@ -32,12 +32,13 @@
         "Память": "256 ГБ",
         "Камера": "108 Мп",
         "Батарея": "5000 мАч"
-      }
+      },
+      "oldPrice": 25900
     },
     {
       "id": 2,
       "name": "Ноутбук UltraBook 15",
-      "price": 89990,
+      "price": 25910,
       "category": "electronics",
       "image": "/images/placeholder.jpg",
       "description": "Лёгкий и производительный ноутбук для работы и развлечений",
@@ -46,12 +47,13 @@
         "ОЗУ": "16 ГБ",
         "SSD": "512 ГБ",
         "Вес": "1.8 кг"
-      }
+      },
+      "oldPrice": 89990
     },
     {
       "id": 3,
       "name": "Футболка Classic Cotton",
-      "price": 1290,
+      "price": 25930,
       "category": "clothing",
       "image": "/images/placeholder.jpg",
       "description": "Удобная футболка из 100% хлопка, подходит для повседневной носки",
@@ -60,7 +62,8 @@
         "Размеры": "S, M, L, XL",
         "Цвета": "Чёрный, Белый, Синий",
         "Уход": "Машинная стирка 30°C"
-      }
+      },
+      "oldPrice": 25920
     },
     {
       "id": 4,
@@ -190,6 +193,25 @@
           "general"
         ]
       }
+    },
+    {
+      "login": "login",
+      "name": "login",
+      "email": "login@mail.ru",
+      "password": "$2b$10$n8V9npWvGIGUFF/MciM4Bu65iAzzxLw/YrSTWG1Vdds6TrmqE20Yy",
+      "cart": [],
+      "notificationSettings": {
+        "enabled": false,
+        "rooms": []
+      },
+      "fcmTokens": [
+        "dWoTuJ8jgy69c7IlwwoNm7:APA91bEwCXsGvaMPk1K5Vs3MRvRBerzQwiKYO3Ko3CK3hjiSe4QxuZc4EuAME6FVVKOpIKKYhku7cAfdByJtc4qw9K3keIgq8nrM_lD0_Rr7vAhra_GC8kM"
+      ],
+      "trackedProducts": [
+        1,
+        2,
+        3
+      ]
     }
   ],
   "chatHistory": {
